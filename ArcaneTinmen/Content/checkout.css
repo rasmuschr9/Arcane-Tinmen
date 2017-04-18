@@ -1,0 +1,12 @@
+﻿.checkout-tpl {
+    padding: 30px 0;
+}
+.checkout-tpl .btn {
+    border-radius: 0;
+}
+.checkout-tpl .btn-primary, .btn-warning {
+    font-size: 24px;
+}
+.checkout-complete .btn .glyphicon {
+    top: 2px;
+}

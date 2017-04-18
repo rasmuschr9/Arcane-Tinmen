@@ -1,0 +1,20 @@
+﻿@model IEnumerable<string>
+
+@Html.ActionLink("All Products", "Index", "Product", null,
+new { @class = "product " + (ViewBag.SelectedSize == null ? "btn-primary" : "") })
+
+@foreach (var link in Model)
+
+{
+        @Html.RouteLink(link, new
+   {
+       controller = "Product",
+       action = "Index",
+       size = link,
+       page = 1
+   }, new
+   {
+       @class = "product "
+     + (link == ViewBag.SelectedSize ? "btn-primary" : "")
+   })
+}

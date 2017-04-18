@@ -1,0 +1,121 @@
+﻿@using ArcaneTinmen.Models;
+@model ArcaneTinmen.ViewModels.ProductsListViewModel
+
+@{
+    ViewBag.Title = "BGS: Products";
+}
+<div class="container">
+    <div id="categories" class="col-xs-12">
+        <div class="product-holder list hidden-xs">
+            @Html.Action("Menu", "Nav")
+        </div>
+        <div class="product-holder dropdown text-center visible-xs">
+            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose product
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                <li>@Html.Action("Menu", "Nav")</li>
+            </ul>
+        </div>
+        <div class="searchfield clearfix hidden-xs">
+            @using (Html.BeginForm("Index", "Product", FormMethod.Get, new { @class = "form-inline pull-right" }))
+            {
+                <div class="form-group">
+                    <div class="radio-inline" style="display:none;">
+                        <label>@Html.RadioButton("option", "Name", true) Name</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.TextBox("search", null, new { @class = "form-control", @placeholder="Search name or size" })
+                </div>
+                <input type="submit"
+                       name="submit"
+                       value="Search"
+                       class="btn btn-primary" />
+
+                if (Model.Products.Count() == 0)
+                {  <div>Records not found</div>  }
+            }
+        </div>
+    </div>
+    <div class="product-info col-xs-12">
+        @foreach (Product product in Model.Products)
+        {
+            <div class="product-single">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="visible-xs">@product.Name</h1>
+                        <a href="#" class="imgholder" data-toggle="modal" data-target="#lightbox">
+                            <div class="img img-100" style="background-image: url('/content/images/@product.Image')">
+                                <img src="/content/images/@product.Image" />
+                            </div>
+                            <div class="search">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <h1 class="hidden-xs">@product.Name</h1>
+                        <h2>@product.Price kr</h2>
+                        @using (Html.BeginForm("AddToCart", "Cart"))
+                {
+                            @Html.Hidden("ProductId", product.ProductId)
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            <input type="submit" class="add-cart btn btn-success" value="Add to cart" />
+                        }
+                        @using (Html.BeginForm("Index", "Cart"))
+                {
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            <input type="submit" class="view-cart btn btn-warning" value="View Cart" />
+                        }
+                        <div class="specs">
+                            <h3>Specifications</h3>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @product.Size.Name sized sleeve
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        string[] specs = product.Specs.Split('x');
+                                        foreach (string spec in specs)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @spec mm
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="games-compat col-xs-12 col-sm-6 col-sm-push-6">
+                        <h3>Game compatibility</h3>
+                        <ul>
+                            @foreach (Games g in Model.Games)     
+                                {
+                                <li><i class="fa fa-check"></i> @g.Name</li>
+                                }
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                        <h3>Description</h3>
+                        <p>@product.Description</p>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        }
+    </div>
+</div>

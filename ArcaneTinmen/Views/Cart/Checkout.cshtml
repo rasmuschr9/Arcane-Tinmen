@@ -1,0 +1,72 @@
+﻿@model ArcaneTinmen.ViewModels.CheckoutModel
+@{
+    ViewBag.Title = "BGS: Checkout";
+}
+<div class="checkout-tpl">
+    <div class="container">
+        <h2>Check out now</h2>
+        <p>Please enter your details, and we'll ship your Board Game Sleeves right away!</p>
+        <p><strong>All fields are required</strong></p>
+        <h2>@Html.ValidationMessage("CustomError")</h2>
+        @using (Html.BeginForm())
+        {
+            <h3>Ship to</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Firstname:</label>
+                        @Html.TextBoxFor(x => x.Firstname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Firstname)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Lastname:</label>
+                        @Html.TextBoxFor(x => x.Lastname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Lastname)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Email)
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Email:</label>
+                        @Html.TextBoxFor(x => x.ConfirmEmail, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.ConfirmEmail)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Address:</label>
+                        @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Address)
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Zip:</label>
+                                @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Zip)
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label>City:</label>
+                                @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.City)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right checkout-complete">
+                        <button class="btn btn-primary" type="submit">Complete order <span class="glyphicon glyphicon-chevron-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
